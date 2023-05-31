@@ -15,16 +15,16 @@ The consequences of a long-lasting and widespread power blackout can approach a 
 As already mentioned, there are many norms for connection of photovoltaic power plants in germany, proposed over the last 20 years. For our predicitons, we consider the following 4 PV Norms: 
 
 1. DIN V VDE V (2006)
-![image](https://github.com/SimBim5/PVNormPrediction/assets/78179768/3766afc3-f30a-49e6-a7b5-e8910235b6fd)
+![LINDA 2.0](Photos/2.png)
 
 2. VDEW 2001 (1991)
-![image](https://github.com/SimBim5/PVNormPrediction/assets/78179768/7ca06871-63ad-4125-a2ae-91e19bb60bd3)
+![LINDA 2.0](Photos/4.png)
 
 3. VDE4105 (2001/2005)
-![image](https://github.com/SimBim5/PVNormPrediction/assets/78179768/37e4f394-cb9b-4ed4-9054-e1ca6495c04e)
+![LINDA 2.0](Photos/1.png)
 
 4. SysStab V (2012)
-![image](https://github.com/SimBim5/PVNormPrediction/assets/78179768/912524d1-0122-442b-9407-4695667b3764)
+![LINDA 2.0](Photos/3.png)
 
 
 
