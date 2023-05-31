@@ -27,8 +27,14 @@ As already mentioned, there are many norms for connection of photovoltaic power 
 <img src="Photos/3.png" alt="Sys Stab V" style="width: 60%;">
 
 
-# 🤖⚙️🔧 Code 🦾👩‍💻💻
+# 🤖⚙️🔧 Code | DNN 🦾👩‍💻💻
+For the predicition of the PV-Norms, a deep neural network is been used. For the usage open the DNN folder in environment you wish and run the dnn.py file. 
+Firstly, you will get asked if you want to Train, Test or Predict. 
+
+## Train
+If you type 'Train', you will train some parameters (weights, bias) for the neural network. After the code has finished, the resuts will get saved under DNN/parameters. For training, you will have to put some trainings data under DNN/DataSets. To generate some Data Sets, check [Data Simulation](# 📝🧾📂 Code | Data Simulation 📋📕⚙️)
 
 
-# 📝🧾📂 How to 📋📕⚙️
+# 📝🧾📂 Code | Data Simulation 📋📕⚙️
+# 📝🧾📂 Code | Messdaten 📋📕⚙️
 
