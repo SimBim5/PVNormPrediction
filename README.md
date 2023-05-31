@@ -15,19 +15,16 @@ The consequences of a long-lasting and widespread power blackout can approach a 
 As already mentioned, there are many norms for connection of photovoltaic power plants in germany, proposed over the last 20 years. Because we want to predict PV norms based on the behavior when the frequency is reduced, the following 4 PV norms are observed (Power per Unit over Frequency):
 
 1. DIN V VDE V (2006)
-![DIN V](Photos/2.png)
-
-<img src="Photos/2.png" alt="DIN V" style="width: 50%;">
-
+<img src="Photos/2.png" alt="DIN V" style="width: 60%;">
 
 2. VDEW 2001 (1991)
-![VDEW 2001](Photos/4.png)
+<img src="Photos/4.png" alt="VDEW 2001" style="width: 60%;">
 
 3. VDE4105 (2001/2005)
-![VDE 4105](Photos/1.png)
+<img src="Photos/1.png" alt="VDE 4105" style="width: 60%;">
 
 4. SysStab V (2012)
-![Sys Stab V](Photos/3.png)
+<img src="Photos/3.png" alt="Sys Stab V" style="width: 60%;">
 
 
 # 🤖⚙️🔧 Code 🦾👩‍💻💻
