@@ -211,6 +211,7 @@ def smooth_frequency(frequency):
     return smooth_frequency
 
 def plot_everything_10ms(power, norm_power, time, frequency, frequency_smooth):
+    Hz = np.linspace(50,51.6,1601)
     
     plt.figure(figsize=(15, 8))
     plt.subplot(2, 2, 1) 
@@ -226,13 +227,14 @@ def plot_everything_10ms(power, norm_power, time, frequency, frequency_smooth):
     plt.xticks([time[0], time[-1]], visible=True, rotation="horizontal")
     plt.xlim([time[0], time[-1]])
     plt.subplot(2, 2, 4) 
-    plt.plot(frequency_smooth, norm_power, "darkorange") 
-    plt.axis([min(frequency_smooth), max(frequency_smooth), min(norm_power), max(norm_power)])
+    plt.plot(Hz, norm_power, "darkorange") 
+    plt.axis([min(Hz), max(Hz), min(norm_power), max(norm_power)])
     plt.show()
+    plt.close()
     
     return
 
-def save_result(filename, frequency_smooth, norm_power):
+def save_result(filename, norm_power):
     """
     Saves the Plot in Messdaten_Visuell/10msRMS
     
@@ -243,16 +245,40 @@ def save_result(filename, frequency_smooth, norm_power):
     Returns:        path                Path where the Results are gettings saved
     """
     
+    Hz = np.linspace(50,51.6,1601)
     path = 'Messdaten_Visuell/10msRMS/' + filename[:-4]
     
     plt.figure(figsize=(15, 8))
-    plt.plot(frequency_smooth, norm_power, "darkorange") 
+    plt.plot(Hz, norm_power, "darkorange") 
     plt.xlabel("Frequency")
     plt.ylabel("Power")
-    plt.axis([min(frequency_smooth), max(frequency_smooth), min(norm_power), max(norm_power)])
+    plt.axis([min(Hz), max(Hz), min(norm_power), max(norm_power)])
     plt.savefig(path, dpi=300)
+    plt.show()
+    plt.close()
     
     return path
+
+
+def power_1601(power, frequency):
+    """
+    Takes in a Power Array with random length and gives back a power array with size 1601
+    
+    Arguments:      power           Power Array with random size
+                    frequency       frequency Array with random size
+    
+    Returns:        path            Power Array with size 1601
+    """
+    
+    Hz = np.linspace(50,51.6,1601)
+    new_power = []
+    idx = 0
+    for y in Hz:
+        idx = (np.abs(frequency[idx:] - y)).argmin() + idx
+        new_power.append(power[idx])
+        
+    new_power = savgol_filter(new_power, 10, 1)
+    return new_power
 
 def create_pickle(norm_power, filename):
     """
@@ -264,18 +290,15 @@ def create_pickle(norm_power, filename):
     Returns:        path                Path where the Pickle file is getting saved
     """
     
-    diff = norm_power.shape[0]%1601
+    diff = len(norm_power)%1601
 
     if diff != 0:
         print('Power array Size is not divisible by 1601 and therefore not fitable to the DNN. No Pickle File created!')
         return
 
-    norm_power_pickle = norm_power[::int(norm_power.shape[0]/1601)] #  get norm_power array to size 1601
-    assert (norm_power_pickle.shape[0] == 1601)
-
     filename = filename.split('_')[0] + filename.split('_')[2][:-4] + '.pkl'
     path = 'Pickle/' + filename
     with open(path, 'wb') as f:
-        pickle.dump(norm_power_pickle, f)
+        pickle.dump(norm_power, f)
         
     return path

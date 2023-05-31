@@ -50,6 +50,7 @@ def VDE_AR_N_4105():
             case x if x > noise2:
                 P = 0
         ywerte.append(P)
+
     return ywerte
 
 def VDEW_2001():
@@ -73,6 +74,7 @@ def VDEW_2001():
             case x if x < noise:
                 P = Pow
         ywerte.append(P)
+        
     return ywerte
 
     
@@ -97,6 +99,7 @@ def DIN_V_VDE_V():
             case x if x < noise:
                 P = Pow
         ywerte.append(P)
+        
     return ywerte
 
 
@@ -120,6 +123,7 @@ def SysStabV(Hzvalue):
             case x if x < threshold:
                 P = Pow
         ywerte.append(P)
+        
     return ywerte
 
 
@@ -350,13 +354,3 @@ def create(all_power_array, all_norms_array, set, nrgesamt_array, iteration):
         vali.create_dataset('list_classes', data = classes)
         vali.create_dataset('vali_set_x', data = all_power_array)
         vali.create_dataset('vali_set_y', data = all_norms_array)
-     
-     
-     
-     
-    #   to read a h5 file:    
-    #with h5py.File(filename, "r") as f:
-    #print("Keys: %s" % f.keys())
-    #a_group_key = list(f.keys())[0]
-    #data = list(f[a_group_key])
-    #print(data)

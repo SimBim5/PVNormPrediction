@@ -50,19 +50,28 @@ def messdaten():
         
         frequency_smooth = smooth_frequency(frequency)
         
-        norm_power = normalize(power)
+        power1601 = power_1601(power, frequency_smooth)
+        norm_power = normalize(power1601)
         
-        #plot_everything_10ms(power, norm_power, time, frequency, frequency_smooth)
+        plot_everything_10ms(power, norm_power, time, frequency, frequency_smooth)
         
-        path = save_result(filename, frequency_smooth, norm_power)
+        path = save_result(filename, norm_power)
         
         print('Plot Saved Under', path)
         
         h5_mode = str(input('Do you want to create a pickle file: '))
+        
         if h5_mode == 'Yes':
+            
             path = create_pickle(norm_power, filename)
             
-            from_directory = r"C:\Users\49152\Desktop\FP\Messdaten\Pickle"
-            to_directory = r"C:\Users\49152\Desktop\FP\DNN\Pickle"
+            from_directory = "Pickle"
+            to_directory = "../DNN/Pickle"
             copy_tree(from_directory, to_directory)
-messdaten()
+            #frequency_smooth = frequency_smooth[::int(frequency_smooth.shape[0]/1601)]
+            
+            
+        return filename, norm_power
+if __name__ == "__messdaten__":
+    messdaten()
+#messdaten()

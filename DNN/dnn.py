@@ -1,63 +1,56 @@
-import time
 import numpy as np
-import h5py
+import pandas as pd
 import matplotlib.pyplot as plt
-import scipy
-import pickle 
+import pickle
 import os.path
-
-
-from PIL import Image
-from scipy import ndimage
+import time
 from tqdm import tqdm
+import shutil
 from utils import *
 
+#plt.ion()  # Enable interactive mode
 
-modus = str(input("Train,Test or Predict: "))
-
-
-plt.rcParams['figure.figsize'] = (5.0, 4.0) # set default size of plots
+# Set default plot configurations
+plt.rcParams['figure.figsize'] = (5.0, 4.0)
 plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'
 
+# Set random seed
 np.random.seed(1)
 
-if modus == 'Train':
-    [print(x) for x in os.listdir("h5") if x.startswith("Train") == True]
-    trainset = str(input("On which Trainset do you want to Train on "))
-    train_x, train_y, classes = load_data_train(trainset)
+# Get mode from user input
+mode = str(input("Train, Test, or Predict: "))
 
+if mode == 'Train':
+    # Get available trainsets and select one
+    trainsets = [x for x in os.listdir("h5") if x.startswith("Train")]
+    [print(x) for x in trainsets]
+    trainset = str(input("Enter the name of the trainset: "))
+    train_x, train_y, classes = load_data_train(trainset)
     m_train = train_x.shape[0]
 
-    #print ("Number of training examples: " + str(m_train))
-    #print ("train_x_orig shape: " + str(train_x.shape))
-    #print ("train_y shape: " + str(train_y.shape))
-    #print ("train_x's shape: " + str(train_x.shape))
-
-if modus == 'Test':
-    [print(x) for x in os.listdir("h5") if x.startswith("Test") == True]
-    testset = str(input("On which Testset do you want to Test on "))
+if mode == 'Test':
+    # Get available testsets and select one
+    testsets = [x for x in os.listdir("h5") if x.startswith("Test")]
+    [print(x) for x in testsets]
+    testset = str(input("Enter the name of the testset: "))
     test_x, test_y, classes, test_set_pv_norms = load_data_test(testset)
-    
     m_test = test_x.shape[0]
 
-    #print ("Number of testing examples: " + str(m_test))
-    #print ("test_x_orig shape: " + str(test_x.shape))
-    #print ("test_y shape: " + str(test_y.shape))
-    #print ("test_x's shape: " + str(test_x.shape))
 
 layers_dims = [1601, 200, 100, 50, 25, 12, 4]
 
+
 def L_layer_model(X, Y, layers_dims, learning_rate, num_iterations, print_cost=False):
-    
     np.random.seed(1)
-    costs = []    # keep track of cost
+    best_parameters = {}
+    costs = []
+    
     
     parameters = initialize_parameters_deep(layers_dims)
      
     for i in tqdm(range(0, num_iterations)):
-
-        # Forward propagation: [LINEAR -> RELU]*(L-1) -> LINEAR -> SIGMOID.
+        # Forward propagation: [LINEAR -> RELU]*(L-1) -> LINEAR -> SIGMOID
         AL, caches = L_model_forward(X, parameters)
         
         # Compute cost
@@ -68,57 +61,83 @@ def L_layer_model(X, Y, layers_dims, learning_rate, num_iterations, print_cost=F
  
         # Update parameters
         parameters = update_parameters(parameters, grads, learning_rate)
-                
-        # Print the cost every 100 training example
-        #if print_cost and i % 100 == 0:
-        #    print ("Cost after iteration %i: %f" %(i, cost))
-        if print_cost and i % 100 == 0:
-            costs.append(cost)
-            
-    # plot the cost
+        
+        # Save parameters if cost improves
+        if all(i >= cost for i in costs):
+            best_parameters = parameters
+        
+        costs.append(cost)
+
+    # Plot the cost
     plt.plot(np.squeeze(costs))
     plt.ylabel('cost')
     plt.xlabel('iterations (per tens)')
-    plt.title("Learning rate =" + str(learning_rate))
+    plt.title("Learning rate = " + str(learning_rate))
     plt.show()
     
     min_cost = min(costs)
     min_index = costs.index(min_cost)
-    print('Min Cost', min(costs), 'in Iteration:', min_index * 100)
+    print('Min Cost:', min_cost, 'in Iteration:', min_index)
+
     
-    return parameters
+    return parameters, best_parameters
+
 if __name__ == "__L_layer_model__":
     L_layer_model()
 
 
-if modus == 'Train': 
-    iterations = int(input("Amount of Iterations: "))
-    learning_rate = float(input("Learning Rate: "))
-    filename = 'Parameters/parameters_' + str(m_train) + '_' + str(iterations) + '_' + str(learning_rate) + '.pkl'
-    
-    parameters = L_layer_model(train_x, train_y, layers_dims, learning_rate, iterations, print_cost = True)
-    with open(filename, 'wb') as f:
-        pickle.dump(parameters, f)
+if mode == 'Train': 
+    # Check if multiple trainings are desired
+    multiple = str(input("Multiple trainings? (Yes/No): "))
 
-
-if modus == 'Test': 
-    [print(x) for x in os.listdir("Parameters")]
-    parameterfile = str(input("Type the name of the parameters you want to use: "))
     
-    parameterpath = 'Parameters/' + parameterfile
+    if multiple == 'No':
+        iterations = int(input("Amount of iterations: "))
+        learning_rate = float(input("Learning rate: "))
+        filename = f'Parameters/parameters_{m_train}_{iterations}_{learning_rate}.pkl'
+        
+        parameters, best_parameters = L_layer_model(train_x, train_y, layers_dims, learning_rate, iterations,
+                                                   print_cost=True)
+        
+        with open(filename, 'wb') as f:
+            pickle.dump(best_parameters, f)
+            
+        print(f'Parameters saved under {filename}')
+       
+            
+    if multiple == 'Yes':
+        iterations = int(input("Amount of iterations: "))
+        
+        for learning_rate in np.arange(0.001, 0.012, 0.002):
+            learning_rate = round(learning_rate, 3)
+            filename = f'Parameters/parameters_{m_train}_{iterations}_{learning_rate}.pkl'
+            
+            parameters, best_parameters = L_layer_model(train_x, train_y, layers_dims, learning_rate, iterations, print_cost = True)
+            
+            with open(filename, 'wb') as f:
+                pickle.dump(best_parameters, f)
+
+            print(f'Parameters saved under {filename}')
+
+if mode == 'Test': 
+    # Get available parameter files and select one
+    parameter_files = os.listdir("Parameters")
+    [print(x) for x in parameter_files]
+    parameterfile = str(input("Enter the name of the parameters you want to use:\t\t"))
+
+    
+    parameterpath = f'Parameters/{parameterfile}'
     with open(parameterpath, 'rb') as f:
         parameters = pickle.load(f)
+
     
     nr = 0
-    allerror = 0
-    vdeerror = 0
-    vdewerror = 0
-    dinerror = 0
-    syserrir = 0
+    all_error = 0
     for test in test_x:
         powerarray = []
         powerarray.append(test)
         powerarray = np.array(powerarray)
+
         
         pvnorm1 = test_set_pv_norms[nr][0]
         pvnorm2 = test_set_pv_norms[nr][1]
@@ -126,40 +145,57 @@ if modus == 'Test':
         pvnorm4 = test_set_pv_norms[nr][3]
         
         nr = nr +1
-        result, errorrateVDE, errorrateVDEW, errorrateDIN, errorrateSys = metric(powerarray, parameters, nr, pvnorm1, pvnorm2, pvnorm3, pvnorm4) 
+        result = metric(powerarray, parameters, nr, pvnorm1, pvnorm2, pvnorm3, pvnorm4) 
         
-        vdeerror = errorrateVDE + vdeerror
-        vdewerror = errorrateVDEW + vdewerror
-        dinerror = errorrateDIN + dinerror
-        syserrir = errorrateSys + syserrir
-        allerror = allerror + result
-        
-    print(vdeerror, 'VDE_AR_N_4105 PV Norms are not predicted correctly.')
-    print(vdewerror, 'VDEW_2001 PV Norms are not predicted correctly.')
-    print(dinerror, ' DIN_V_VDE_V PV Norms are not predicted correctly.')
-    print(syserrir, 'SysStabV PV Norms are not predicted correctly.')
-    print(f'{(allerror/nr):.2f}% PV Norms are not predicted correctly.')
+        all_error += result
 
-if modus == 'Predict': 
-    parameterfile = str(input("Type the name of the parameters you want to use: "))
-    powerarrayfile = str(input("Type the name of the Powerarray you want to use for the Prediction: "))
+    print(f'{(all_error / nr):.2f}% PV Norms are not predicted correctly.')
 
-    nrModulsknown = str(input("Do we know how much Moduls are in the grid? (Type either Yes or No): "))
-    if nrModulsknown == 'Yes':
-        nrModuls = int(input("How many Moduls are in the grid?" ))
-    if nrModulsknown == 'No': 
-        nrModuls = None
+if mode == 'Predict': 
+    parameterfile = str(input("Enter the name of the parameters you want to use: \t\t\t"))
+    powerarrayfile = str(input("Enter the name of the Powerarray you want to use for the prediction: \t"))
+    
+    dataframe = pd.read_excel('Anlagendaten/Anlagendaten.xlsx')
 
     parameterpath = 'Parameters/' + parameterfile
     with open(parameterpath, 'rb') as f:
         parameters = pickle.load(f)
-        
+
     powerarraypath = 'Pickle/' + powerarrayfile
     with open(powerarraypath, 'rb') as f:
         powerarray = pickle.load(f)
 
     powerarray2 = []
     powerarray2.append(powerarray)
-    powerarray2 = np.array(powerarray2)
+    powerarray2 = np.array(powerarray2) 
 
-    prediction = predict(powerarray2, parameters, nrModuls)
+    if powerarrayfile[:-8] in set(dataframe['Ort']):
+
+        vdepower, dinpower, syspower, vdewpower = calculate_power(parameterfile, powerarrayfile)
+
+        location = str(input(Fore.RESET + "Type the location:\t\t\t "))
+        date = str(input("Type the date (YYYY-MM-DD):\t\t "))
+        time = input('Type the time (HH:MM):\t\t\t ')
+        temperature, irradiance = solar(location, date, time)
+
+        wirkungsgrad = wirkungsgrad(temperature, irradiance)
+        
+        vdepower = wirkungsgrad * vdepower
+        vdewpower = wirkungsgrad * vdewpower
+        dinpower = wirkungsgrad * dinpower
+        syspower = wirkungsgrad * syspower
+        
+        print('Leistung der PV Anlagen:\t\t', (vdepower + vdewpower + dinpower + syspower), '[kW]')
+        terminal_width = shutil.get_terminal_size().columns
+        print('#' * terminal_width)
+        
+        plot_result(vdepower, vdewpower, dinpower, syspower)
+        
+        load = load(powerarrayfile[:-8], date, time)
+        
+        plot_result_with_load(vdepower, vdewpower, dinpower, syspower, load)
+        
+    else:
+        nrModuls = None
+        vde, vdew, din, sys = predict(powerarray2, parameters, nrModuls)
+        plot_result(vde, vdew, din, sys)
