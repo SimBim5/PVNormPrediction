@@ -26,7 +26,7 @@ As already mentioned, there are many norms for connection of photovoltaic power 
 4. SysStab V (2012)
 <img src="Photos/3.png" alt="Sys Stab V" style="width: 60%;">
 
-
+<a name="Code"></a>
 # 🤖⚙️🔧 Code | DNN 🦾👩‍💻💻
 For the predicition of the PV-Norms, a deep neural network is been used. For the usage open the DNN folder in environment you wish and run the dnn.py file. 
 Firstly, you will get asked if you want to Train, Test or Predict. 
@@ -62,7 +62,16 @@ Also the code will show you the estimated load inside the grid estimated from st
 
 <a name="Simulation"></a>
 # 📝🧾📂 Code | Data Simulation 📋📕⚙️
+To generate either Train or Test data, open the folder /Daten_Simulation. Here you can run the generate.py file. 
 
+For this purpose, run generate.py and type the size of the Set you want to generate (how much examples inside the set). 
+
+Now type either Test or Train. The code will generate some examples of grids, with random amounts of the 4 different norms inside. The resulting plots + ground truths in .txt form will be saved under Daten_Simulation/DataSets. The code will also generate a .h5 file, containing the Power Values, and Ground Thruth for each example, which can then be used for training or testing. The .h5 files are saved under /Daten_Simulation/h5. 
+
+The DataSet and h5 file will be automatically be copied inside the DNN folder.
 
 # 📝🧾📂 Code | Messdaten 📋📕⚙️
 
+If you have measurements in .asc form, you can lay them down inside the folder /Messdaten/Messdaten/10msRMS and generate .pkl files, which then can be used to predict PV-Norms in [Code](#Code). 
+
+For this purpose, run messdaten.py and type 10msRMS. You will be asked on which place you want to create the .pkl file on. Type the location from the list. You will also be asked which time you want to use (! you have to modifiy the .asc file yourself, so that it is only the data from 50Hz to 51.6 Hz). Now type the time. The P(t), F(t) and P(f) plots will be shown and P(f) will be saved under /Messdaten_Visuell/10msRMS/. Also, the pkl file will be saved  /Messdaten_Visuell/Pickle/
