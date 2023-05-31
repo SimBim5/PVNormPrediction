@@ -45,9 +45,20 @@ Next you will get asked about the Amount of Iterations. This means the number of
 After you enter the Amount of Iterations, finally you can enter the Learning rate (if you didnt chose Yes in Multiple Trainings). Afterwards the training will start, and the trained paramaters will be saved in DNN/Parameters. 
 
 ## Test
+If you type 'Test', you can now test the performance of specific parameters, you trainied beforehand. For that purpose you have to put an Test Set inside the folder DNN/DataSets. If you do not have one, you can again create one with [Data Simulation](#Simulation). To go on with the code, type the Test Set you want to use. 
 
+Now type the parameters you want to test. 
 
+The code will run and print the Predicted Norms + Ground Truth for every single example in the Test Set. It will also print the % of the wrongly predicted Norms, and the overall % of the wrongly predicted Norms. 
 
+## Predict
+If you type Predict, you can run the code on a single measurement. Again, firstly enter the name of the parameters you want to use for your prediction. After that type the name of the measurment you want to feed in the neural network. For that purpose, the measurment (1601 Power Values in form of a .pkl file) has to be inside the folder DNN/Pickle. Now, type one of the .pkl file names to predict Norms on it. 
+
+The Predictions form the Net + the Ground Truth will now be shown. 
+
+If you continue with typing the location, date, and time (when and where the measurments where made), you will also be shown the estimated generated power of all PV Moduls inside the grid (multiplied with a multiplied with a certain efficiency estimated from irradiation and temperature on this day and place).
+
+Also the code will show you the estimated load inside the grid estimated from standard load profiles (H0, G0, L0).
 
 <a name="Simulation"></a>
 # 📝🧾📂 Code | Data Simulation 📋📕⚙️
