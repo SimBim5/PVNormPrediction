@@ -34,7 +34,24 @@ Firstly, you will get asked if you want to Train, Test or Predict.
 ## Train
 If you type 'Train', you will train some parameters (weights, bias) for the neural network. After the code has finished, the resuts will get saved under DNN/parameters. For training, you will have to put some trainings data under DNN/DataSets. To generate some Data Sets, check [Data Simulation](#Simulation)
 
+Next you will be asked, which TrainSet to train on. If the folder DNN/DataSets is not empty, the Data Set should be shown to you. Enter the name to train on this set. 
+
+For Multiple Trainings you can either type Yes or No. 
+Yes: Multiple Trainings with the learning rates 0.001, 0.003, 0.005, 0.007, 0.009, 0.011, will be made.
+No: Only one Training with the learning rate you enter will be made. 
+
+Next you will get asked about the Amount of Iterations. This means the number of passes of the training data through the network. Usually good performance is made with huge iterations and small learning rate. 
+
+After you enter the Amount of Iterations, finally you can enter the Learning rate (if you didnt chose Yes in Multiple Trainings). Afterwards the training will start, and the trained paramaters will be saved in DNN/Parameters. 
+
+## Test
+
+
+
+
 <a name="Simulation"></a>
 # 📝🧾📂 Code | Data Simulation 📋📕⚙️
+
+
 # 📝🧾📂 Code | Messdaten 📋📕⚙️
 
