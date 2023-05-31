@@ -7,7 +7,7 @@ As a part of the project LINDA 2.0, several field test will be performed on low 
 
 # 🚀🔬😎 LINDA 2.0 🔎🔆🔋
 
-![LINDA 2.0](Photos/Linda2.0.png)
+![LINDA 2.0](Photos/Linda.png)
 The consequences of a long-lasting and widespread power blackout can approach a national catastrophe with serious consequences for civil society. The use of decentralized energy supply systems as an emergency supply for critical infrastructure using island grids can significantly reduce the damage in such scenarios. In the LINDA research project (local stand-alone grid supply and accelerated grid reconstruction with decentralized generation plants), a concept for stable stand-alone grid operation in the event of an emergency supply was developed and tested in a southern German grid area under real conditions. In LINDA 2.0, the LINDA concept will be transferred to another test area and (partially) automated. The object of investigation is a constellation of run-of-river power plant as an island network-forming unit and drinking water supply as critical infrastructure. Several field tests are planned. In addition, as part of the project, a hybrid unit is being developed and tested in the distribution network. The hybrid unit is intended to be an alternative to a conventional emergency power unit and consists of an inverter that forms an island grid with battery storage and a diesel generator as a range extender. In regular operation, the range extender is switched off and the unit works completely emission-free (noise, exhaust gas and CO2).
 
 # ☀️🔋⚡ PV Norms  💡🌞🔌
