@@ -61,7 +61,7 @@ If you continue with typing the location, date, and time (when and where the mea
 Also the code will show you the estimated load inside the grid estimated from standard load profiles (H0, G0, L0).
 
 <a name="Simulation"></a>
-# 📝🧾📂 Code | Data Simulation 📋📕⚙️
+# 🤖⚙️🔧 Code | Data Simulation 🦾👩‍💻💻
 To generate either Train or Test data, open the folder /Daten_Simulation. Here you can run the generate.py file. 
 
 For this purpose, run generate.py and type the size of the Set you want to generate (how much examples inside the set). 
@@ -70,7 +70,7 @@ Now type either Test or Train. The code will generate some examples of grids, wi
 
 The DataSet and h5 file will be automatically be copied inside the DNN folder.
 
-# 📝🧾📂 Code | Messdaten 📋📕⚙️
+# 🤖⚙️🔧 Code | Messdaten 🦾👩‍💻💻
 
 If you have measurements in .asc form, you can lay them down inside the folder /Messdaten/Messdaten/10msRMS and generate .pkl files, which then can be used to predict PV-Norms in [Code](#Code). 
 
