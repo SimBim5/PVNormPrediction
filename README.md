@@ -7,7 +7,7 @@ As a part of the project LINDA 2.0, several field test will be performed on low 
 
 # 🚀🔬😎 LINDA 2.0 🔎🔆🔋
 
-![LINDA 2.0](PVNormPrediction/Photos/Linda.png)
+![LINDA 2.0](Photos/Linda.png)
 
 
 # ☀️🔋⚡ PV Norms  💡🌞🔌
