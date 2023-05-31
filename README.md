@@ -17,7 +17,7 @@ As already mentioned, there are many norms for connection of photovoltaic power 
 1. DIN V VDE V (2006)
 ![DIN V](Photos/2.png)
 
-<img src="Photos/2.png" alt="DIN V" style="width: 100%;">
+<img src="Photos/2.png" alt="DIN V" style="width: 50%;">
 
 
 2. VDEW 2001 (1991)
