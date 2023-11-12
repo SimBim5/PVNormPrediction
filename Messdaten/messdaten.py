@@ -8,7 +8,7 @@ from utils import *
 mode = str(input("Zyklisch or 10msRMS: "))
 
 def messdaten():
-    if mode == 'Zyklisch':
+    if mode == "Zyklisch":
         print('Which Zyklische Daten do you want to use?')
         datalist = os.listdir("Messdaten/ZyklischeDaten")
         datalist = [x[:-19] for x in datalist]
@@ -72,6 +72,7 @@ def messdaten():
             
             
         return filename, norm_power
+    
 if __name__ == "__messdaten__":
     messdaten()
-#messdaten()
+messdaten()
